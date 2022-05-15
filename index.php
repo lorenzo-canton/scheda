@@ -24,7 +24,7 @@
                     echo '<p class="card-subtitle">Ultimo cedimento: serie [ ' . $cedimento["serie"] . ' ] peso [ ' . $cedimento["peso"] . ' ]</p>';
                 }
         
-                echo    '<form action="/dbservice/addcedimento.php" method="POST">' .
+                echo    '<form action="/scheda/dbservice/addcedimento.php" method="POST">' .
                             '<input type="hidden" name="esercizio" value="' . $esrow["id"] . '">' .
                             ' Serie: <input type="text" name="serie"><br>' . 
                             ' Peso: <input type="text" name="peso">' .
@@ -45,7 +45,7 @@
 </head>
 <body class="bg-dark text-light">
 
-<form action="/dbservice/addesercizio.php" method="POST"
+<form action="/scheda/dbservice/addesercizio.php" method="POST"
     class="m-5">   
 <h3 for="basic-url">Nuovo esercizio</h3>
 <div class="input-group mb-3">
