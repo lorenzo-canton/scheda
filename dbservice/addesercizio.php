@@ -1,6 +1,6 @@
 <?php
     include 'dbconnect.php';
-    
+    $conn = connect();
     $sql = 'insert into esercizio(muscolo, nome, serie)' . 
     'values("' . $_POST["muscolo"] . '","' . $_POST["nome"] . '","' . $_POST["serie"] . '")';
 

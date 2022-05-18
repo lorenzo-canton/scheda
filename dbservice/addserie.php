@@ -2,7 +2,7 @@
     include 'dbconnect.php';
     
     echo $_POST["numero"];
-
+    $conn = connect();
     $sql = 'insert into seres(esercizio, numero)' . 
     'values(' . $_POST["esercizio"] . ',"' . $_POST["numero"] . '")';
 

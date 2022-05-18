@@ -1,6 +1,6 @@
 <?php
     include 'dbconnect.php';
-
+    $conn = connect();
     $sql = 'insert into cedimento(esercizio, peso, serie, giorno) ' .
     'values("' . $_POST["esercizio"] . '","' . $_POST["peso"] . '","' . $_POST["serie"] . '","' . date('Y-m-j') . '")';
 
