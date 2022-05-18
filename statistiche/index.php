@@ -1,55 +1,49 @@
 <?php
     include '../dbservice/dbconnect.php';
-    function getCedimento($esercizio) {
+    function printCedimenti($esercizio, $nome) {
       $conn = connect();
-      $sql = 'select serie, peso from cedimento where esercizio = ' . $esercizio . ' ORDER by giorno DESC LIMIT 1';
+      $sql = 'call cedimenti('.$esercizio.')';
       $result = $conn->query($sql);
       $conn->close();
+      echo '<h3>'.$nome.'</h3>'. 
+          '<table class="table">'.
+              '<thead><tr>'.
+                  '<th scope="col">Giorno</th>'.
+                  '<th scope="col">Serie</th>'.
+                  '<th scope="col">Peso</th>'.
+              '</tr></thead>'.
+              '<tbody>';
       if ($result->num_rows > 0) {
-          return $result->fetch_assoc();
-      }
-      return null;
-    }
-    function printEsercizi() {
-      $conn = connect();
-      $sql = "select * from esercizio";
-      $result = $conn->query($sql);
-      $conn->close();
-      if ($result->num_rows > 0) {
-          while($esrow = $result->fetch_assoc()) {
-              echo '<div class="card-dark p-1 m-2 border border-primary" style="width: 26rem;">' .
-                      '<div class="card-body">' . 
-                      '<h5 class="card-title">' . $esrow["muscolo"] . '</h5>' .
-                      '<p class="text-muted">' . $esrow["nome"] . '</p>' .
-                      '<p>' . $esrow["serie"] . '</p>';
-              $cedimento = getCedimento($esrow["id"]);
-              if ($cedimento  != null) {
-                  echo '<p class="card-subtitle">Ultimo cedimento: serie [ ' . $cedimento["serie"] . ' ] peso [ ' . $cedimento["peso"] . ' ]</p>';
-              }
-      
-              echo    '<form action="/scheda/dbservice/addcedimento.php" method="POST">' .
-                          '<input type="hidden" name="esercizio" value="' . $esrow["id"] . '">' .
-                          ' Serie: <input type="text" name="serie"><br>' . 
-                          ' Peso: <input type="text" name="peso">' .
-                          ' <input type="submit" value="ADD">' .
-                      '</form>' .
-                  '</div></div>';
+          while($row = $result->fetch_assoc()) {
+              echo '<tr><th scope="row">'.$row["giorno"].'</th><td>'.$row["serie"].'</td><td>'.$row["peso"].'</td></tr>';
           }
       }
+      echo '</tbody></table>';        
+    }
+    function printStatistiche() {
+        $conn = connect();
+        $sql = "select id, nome from esercizio";
+        $result = $conn->query($sql);
+        $conn->close();
+        if ($result->num_rows > 0) {
+            while ($esercizio = $result->fetch_assoc()) {
+              printCedimenti($esercizio["id"], $esercizio["nome"]);
+            }
+        }
     }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Scheda</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <body>
-<!-- NAVBAR -->
+    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
           <a class="navbar-brand" href="/scheda/">Scheda</a>
@@ -76,10 +70,15 @@
         </div>
     </nav>
 
-<div class="d-flex flex-wrap m-5">
-    <?php printEsercizi() ?>    
-</div>
+    <main>
+        <div class="m-3 border">
+            <?php
+                printStatistiche();
+            ?>
+        </div>
+    </main>
 
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

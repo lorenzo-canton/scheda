@@ -1,38 +1,18 @@
 <?php
     include '../dbservice/dbconnect.php';
-    function getCedimento($esercizio) {
-      $conn = connect();
-      $sql = 'select serie, peso from cedimento where esercizio = ' . $esercizio . ' ORDER by giorno DESC LIMIT 1';
-      $result = $conn->query($sql);
-      $conn->close();
-      if ($result->num_rows > 0) {
-          return $result->fetch_assoc();
-      }
-      return null;
-    }
     function printEsercizi() {
       $conn = connect();
       $sql = "select * from esercizio";
       $result = $conn->query($sql);
       $conn->close();
+      
       if ($result->num_rows > 0) {
           while($esrow = $result->fetch_assoc()) {
               echo '<div class="card-dark p-1 m-2 border border-primary" style="width: 26rem;">' .
                       '<div class="card-body">' . 
                       '<h5 class="card-title">' . $esrow["muscolo"] . '</h5>' .
                       '<p class="text-muted">' . $esrow["nome"] . '</p>' .
-                      '<p>' . $esrow["serie"] . '</p>';
-              $cedimento = getCedimento($esrow["id"]);
-              if ($cedimento  != null) {
-                  echo '<p class="card-subtitle">Ultimo cedimento: serie [ ' . $cedimento["serie"] . ' ] peso [ ' . $cedimento["peso"] . ' ]</p>';
-              }
-      
-              echo    '<form action="/scheda/dbservice/addcedimento.php" method="POST">' .
-                          '<input type="hidden" name="esercizio" value="' . $esrow["id"] . '">' .
-                          ' Serie: <input type="text" name="serie"><br>' . 
-                          ' Peso: <input type="text" name="peso">' .
-                          ' <input type="submit" value="ADD">' .
-                      '</form>' .
+                      '<p>' . $esrow["serie"] . '</p>'.
                   '</div></div>';
           }
       }
@@ -43,11 +23,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Scheda</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <body>
 <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -75,11 +53,34 @@
           </div>
         </div>
     </nav>
-
+    <form action="/scheda/dbservice/addesercizio.php" method="POST"
+      class="m-5">   
+      <h3 for="basic-url">Nuovo esercizio</h3>
+      <div class="input-group mb-3">
+          <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2">Muscolo</span>
+          </div>
+          <input type="text" class="form-control" placeholder="Petto" name="muscolo">
+      </div>
+      <div class="input-group mb-3">
+          <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2">Nome</span>
+          </div>
+          <input type="text" class="form-control" placeholder="Bench press" name="nome">
+      </div>
+      <div class="input-group mb-3">
+          <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2">Serie</span>
+          </div>
+          <input type="text" class="form-control" placeholder="3x10" name="serie">
+          <div class="input-group-append">
+              <input type="submit" class="form-control" value="INVIA">
+          </div>
+      </div>
+    </form>
 <div class="d-flex flex-wrap m-5">
     <?php printEsercizi() ?>    
 </div>
-
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
