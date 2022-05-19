@@ -13,6 +13,10 @@
                       '<h5 class="card-title">' . $esrow["muscolo"] . '</h5>' .
                       '<p class="text-muted">' . $esrow["nome"] . '</p>' .
                       '<p>' . $esrow["serie"] . '</p>'.
+                      '<form action="/scheda/dbservice/delesercizio.php" method="post">'.
+                        '<input type="hidden" name="id" value="'.$esrow["id"].'">'.
+                        '<input type="submit" value="Elimina">'.
+                      '</form>'.
                   '</div></div>';
           }
       }

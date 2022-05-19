@@ -14,5 +14,5 @@
 
     $conn->close();
 
-    header("location: /scheda");
+    header("location: /scheda/programmazione");
 ?>

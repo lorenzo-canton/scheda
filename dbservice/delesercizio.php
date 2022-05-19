@@ -1,11 +1,10 @@
 <?php
     include 'dbconnect.php';
     $conn = connect();
-    $sql = 'insert into esercizio(muscolo, nome, serie)' . 
-    'values("' . $_POST["muscolo"] . '","' . $_POST["nome"] . '","' . $_POST["serie"] . '")';
+    $sql = 'delete from esercizio where id ='.$_POST["id"];
 
     if ($conn->query($sql) === TRUE) {
-        echo "New record created successfully";
+        echo "Record deleted successfully";
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
