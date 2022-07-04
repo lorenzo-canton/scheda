@@ -1,0 +1,83 @@
+.wrapper {
+    display: flex;
+    align-items: stretch;
+    background-image: url("/scheda/img/sfondo_2.jpg");
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    min-height: 100vh;
+    margin: 1rem;
+    padding: 1rem;
+    background-color: rgba(10, 10, 10, 0.5);
+
+    border-style: solid;
+    border-color: rgba(250, 235, 215, 0.7);
+    border-width: 1px;
+}
+
+#sidebar .sidebar-header {
+    font-size: 36px;
+    font-family: fantasy;
+    color: rgb(250, 235, 215);
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
+.list-group-item {
+    color: rgba(10, 10, 10, 0.5);
+
+    background-color: transparent;
+    
+    border: 1px solid rgba(200, 200, 200, 1);
+    border-bottom: none;
+}
+.list-group-item:hover {
+    background-color: rgba(250, 235, 215, 0.3);
+}
+.list-group-item:last-child {
+    border-bottom:1px solid rgba(200, 200, 200, 1);
+}
+
+
+#sidebar a:link {
+    color: rgba(250, 235, 215, 0.7);;
+}
+#sidebar a:visited {
+    color: rgba(250, 235, 215, 0.7);;
+}
+#sidebar a:hover {
+    color: rgba(250, 235, 215, 0.7);;
+}
+#sidebar a:active {
+    color: rgba(250, 235, 215, 0.7);;
+}
+
+
+#content {
+    width: 100%;
+    margin: 1rem;
+    color: rgba(250, 235, 215, 0.7);
+}
+
+#content .content-title {
+    font-size: 36px;
+    font-family: fantasy;
+    color: rgb(250, 235, 215);
+}
+.card {
+    background-color: rgba(10, 10, 10, 0.5);
+    border: 1px solid rgba(250, 235, 215, 0.7);
+}
+.card .list-group-item {
+    color: rgba(250, 235, 215, 0.7);
+}
+
+#mioCanvas {
+   position: absolute;
+   right: 0;
+   bottom: 0;
+}
